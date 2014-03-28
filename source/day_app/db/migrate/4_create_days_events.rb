@@ -6,7 +6,9 @@ class CreateDaysEvents < ActiveRecord::Migration
       t.integer :day_id #,  # t.references :day
       t.integer :event_id #,  :null => false# t.references :event
       t.boolean :completed
-      t.integer :integrity
+
+      # t.integer :energy
+      # t.integer :integrity
     end
   end
 end

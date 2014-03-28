@@ -4,9 +4,9 @@ class CreatePlayers < ActiveRecord::Migration
   def change
     create_table :players do |t|
       t.string :name
-      t.integer :points
-      t.integer :energy
-      t.integer :integrity
+      t.integer :points, :energy, :integrity
+
+      c.timestamps
     end
   end
 end

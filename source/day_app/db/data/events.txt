@@ -1,0 +1,19 @@
+You have just woken up. It's 8:30 and you are 30 minutes from class!
+What do you do? Do you 'eat' breakfast or 'rush' to class?
+  if 'eat' "Mmmmm! Eggs and coffee."
+    energy goes up by 2, integrity goes down by 3
+  if 'rush' "GOGOGO! you made it! just on time"
+    energy goes down by 1, integrity goes up by 1
+  end
+
+*gooooooong!* Time for the morning meeting. "SKIPPERS TO THE CAAVE!"
+You listen to the morning check-in with Brick and Strand
+  -if energy <= 5
+    You fall asleep during the morning meet! (integrity lowers by 2, energy rises by 1)
+  else
+    You listen during the meet and learn from AHA moments (points go up 2, integrity goes up 1, energy goes down 1)
+  end
+
+"Go forth and code!"
+
+
