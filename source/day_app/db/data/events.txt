@@ -1,19 +1,54 @@
 You have just woken up. It's 8:30 and you are 30 minutes from class!
 What do you do? Do you 'eat' breakfast or 'rush' to class?
   if 'eat' "Mmmmm! Eggs and coffee."
-    energy goes up by 2, integrity goes down by 3
-  if 'rush' "GOGOGO! you made it! just on time"
-    energy goes down by 1, integrity goes up by 1
+    change_player_stats(energy += 2, integrity -= 3)
+  if 'rush' "GOGOGO! You made it! just on time"
+    change_player_stats(energy -= 1, integrity += 1)
   end
+SHOW CURRENT STATS (in string form)
+
+
+
 
 *gooooooong!* Time for the morning meeting. "SKIPPERS TO THE CAAVE!"
 You listen to the morning check-in with Brick and Strand
-  -if energy <= 5
-    You fall asleep during the morning meet! (integrity lowers by 2, energy rises by 1)
+  if (energy <= 5)
+    You fall asleep during the morning meet!
+    change_player_stats(integrity -= 2, energy += 1)
   else
-    You listen during the meet and learn from AHA moments (points go up 2, integrity goes up 1, energy goes down 1)
+    You listen during the meet and learn from AHA moments
+    change_player_stats(points += 2, integrity += 1, energy -= 1)
   end
+SHOW CURRENT STATS (in string form)
+
+
+
 
 "Go forth and code!"
+Do you want to pair or go solo today?
+  if 'solo'
+    change_player_stats(points += 2, integrity -= 1, energy -= 1)
+  else 'pair'
+    change_player_stats(points += 2, integrity +=1 , energy -= 2)
+SHOW CURRENT STATS (in string form)
+Submit code:
+  if 
 
 
+
+
+It's 6:30PM. You've done some great coding today! Do you want to stay to continue coding?
+  if 'yes'
+    change_player_stats(pionts += 1, energy -= 2, integrity += 1)
+  if 'no'
+    end_day
+    change_player_stats(energy += 2)
+SHOW CURRENT STATS (in string form)
+
+
+
+
+Congradulations! You've finished your day!
+SHOW CURRENT STATS (in string form)
+Go to bed!
+  change_player_stats(energy += 5)
