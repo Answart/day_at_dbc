@@ -1,4 +1,5 @@
-require_relative '../models/list'
+
+
 
 class View
 
@@ -7,6 +8,14 @@ attr_reader :player
   def self.intro
     puts "Welcome to A Day at DBC!. To play, just enter your name.  Ready?  Go!\n"
     sleep(0.3)
+  end
+
+  def self.which_player
+    puts "-"*50
+    puts "What is your name?"
+    name = gets.chomp! # returns name (attribute of player in db)
+    puts "-"*50
+    name
   end
 
   def self.welcome(player)
@@ -22,9 +31,13 @@ attr_reader :player
   end
 
   def self.goodbye(player)
-    puts "Your day is finished!"
+    puts "Congradulations! You've finished your day!"
+    puts ""
+    puts "Go to bed!"
+    player.energy += 5
     current_stats(player)
   end
+end
 
 
 
@@ -37,14 +50,6 @@ attr_reader :player
 
 
 
-
-#   def self.which_player
-#     puts "-"*50
-#     puts "What is your name?"
-#     puts "-"*50
-#     name = gets.chomp! # returns name (attribute of player in db)
-#     # chosen_deck(deck_choice)
-#   end
 
 #   def self.chosen_deck(decision)
 #     if decision == "easy"

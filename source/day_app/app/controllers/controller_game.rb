@@ -1,3 +1,5 @@
+require_relative '../../config/application'
+
 class GameController
 
 attr_reader :game
@@ -5,30 +7,120 @@ attr_reader :game
   def self.start_game
     View.intro # introduce game
     name = View.which_player # gets a name from player
-    player1 = Player.find_or_create_by(first_name: name) # find player object by name, if not there create a new row in Player table with that name
+    @player1 = Player.find_or_create_by(name: name) # find player object by name, if not there create a new row in Player table with that name
         # => #<Client id: 1, first_name: "Andy", orders_count: 0, locked: true, created_at: "2011-08-30 06:09:27", updated_at: "2011-08-30 06:09:27">
-    View.welcome(player1) # welcome back message addressed to player # shows their current stats within welcome
-    player1.create_day # Player model makes a new day(inserts day_id in player table, creates row in day table)
-    this_day = player1.day
-    go_through_day(player1, this_day)
-    View.goodbye
+    View.welcome(@player1) # welcome back message addressed to player # shows their current stats within welcome
+    @player1.days.create # Player model makes a new day(inserts day_id in player table, creates row in day table)
+    go_through_day(@player1)
+
+    View.goodbye(@player1)
   end
 
-  def self.run_event(player, day, days_event)
-    # View.run through first sentence with question
-    # player.day.days_event.day[0]
+  def self.go_through_day(player)
+    p "Player: #{player}"
+    p "Player's days: #{player.days}"
+    p "Player's latest day: #{player.days.last}"
+    p "The events of player's latest day: #{player.days.last.events}"
+    this_days_event = player.days.last.events
 
-
+    this_days_event.each do |event_line|
+      event1_choice if this_days_event == 1 && this_days_event.completed == false #  puts "You have just woken up. It's 08:30 and it's 30 minutes until class! What do you do? Do you 'eat' breakfast or 'rush' to class?"
+      event2_choice if this_days_event == 2 && this_days_event.completed == false
+      event3_choice if this_days_event == 3 && this_days_event.completed == false
+      event4_choice if this_days_event == 4 && this_days_event.completed == false
+    end
   end
 
-  def self.welcome(player)
-    #View.welcome ()
+  def event1_choice
+    event1_input = gets.chomp
+    if event1_input.downcase == "eat"
+      puts "Mmmmm! Tofu scramble and coffee."
+      change_player_stats(energy += 2, integrity -= 3)
+    elsif event1_input.downcase == "rush"
+      puts "GOGOGO! You made it just on time!"
+      change_player_stats(energy -= 1, integrity += 1)
+    end
+    View.current_stats(@player1)
+    @player1.day.days_event[:completed] = true
   end
 
-  def go_through_day(player, day, days_event = 1)
-    if player.day.days_event.completed == false
-      run_event(player, day, days_event)
+  def event2_choice
+    if @player1.energy <= 5
+      puts "You fall asleep during lecture..."
+      @player1.integrity -= 2
+      @player1.energy += 1
+    else
+      puts "You learn from AHA moments and retain at least 80% of lecture!"
+      @player1.points += 2
+      @player1.integrity += 1
+      @player1.energy -= 1
+    end
+    View.current_stats(@player1)
+    @player1.day.days_event[:completed] = true
   end
+
+  def event3_choice
+    event3_input = gets.chomp
+    if event3_input.downcase == "solo"
+      @player1.points += 2
+      @player1.integrity -= 1
+      @player1.energy -= 1
+    elsif event3_input.downcase == "pair"
+      change_player_stats(points += 2, integrity +=1 , energy -= 2)
+    end
+    @player1.code... #update code
+    View.current_stats(@player1)
+    @player1.day.days_event[:completed] = true
+  end
+
+  def event4_choice
+    event4_input = gets.chomp
+    if event4_input=='yes'
+      change_player_stats(pionts += 1, energy -= 2, integrity += 1)
+    else
+      end_day
+      change_player_stats(energy += 2)
+    end
+    View.current_stats(@player1)
+    @player1.day.days_event[:completed] = true
+  end
+
+  # def self.welcome(player)
+  #   #View.welcome ()
+  # end
+end
+
+  # def go_through_day(player, day, days_event = 1)
+  #   if player.day.days_event.completed == false
+  #     run_event(player, day, days_event)
+  # end
+
+
+
+
+
+# Event2.description1
+# def event2_storyline
+#   puts "*gooooooong!* Time for the morning meeting. \"SKIPPERS TO THE CAAVE!\" You listen to the morning check-in with Brick and Strand"
+# end
+
+
+# Event3.description1
+# def event3_storyline
+#   puts "Go forth and code! Do you want to pair, or go solo today?"
+# end
+
+# Event4.description1
+# def event4_storyline
+#   puts "It's 6:30PM. You've done some great coding today! Do you want to stay to continue coding?"
+# end
+
+
+
+
+
+
+
 
 
 
@@ -116,5 +208,3 @@ attr_reader :game
   # end
 
 
-
-end

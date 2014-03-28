@@ -1,3 +1,15 @@
+require_relative '../../day_app/config/application'
+
+event_descriptions = []
+
+File.open('/Users/apprentice/Desktop/day_at_dbc/source/day_app/db/data/events.txt').each do |line|
+  event_descriptions << line
+end
+
+event_descriptions.each do |description|
+  Event.create :description => description
+end
+
 
 
 =begin
