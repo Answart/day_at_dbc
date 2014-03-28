@@ -5,6 +5,7 @@ class CreatePlayers < ActiveRecord::Migration
     create_table :players do |t|
       t.string :name
       t.integer :points, :energy, :integrity
+      t.integer :day_id
 
       c.timestamps
     end
